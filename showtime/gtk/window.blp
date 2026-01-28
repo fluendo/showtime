@@ -132,6 +132,22 @@ template $Window: Adw.ApplicationWindow {
                   valign: center;
                   margin-top: 48;
 
+                  Image lock_icon {
+                    icon-name: "verification";
+
+                    styles [
+                      "overlaid",
+                      "red",
+                    ]
+                  }
+
+                  Label dsc_label {
+                    label: "DSC: Trusted";
+                    styles [
+                      "red",
+                    ]
+                  }
+
                   Button {
                     name: "backwards-button";
                     valign: center;

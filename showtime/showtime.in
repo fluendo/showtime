@@ -13,7 +13,9 @@ from platform import system
 pkgdatadir = "@pkgdatadir@"
 localedir = "@localedir@"
 
-sys.path.insert(1, pkgdatadir)
+# Fix: Add Python modules directory to path
+sys.path.insert(1, "@pythondir@")
+
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 if system() == "Linux":

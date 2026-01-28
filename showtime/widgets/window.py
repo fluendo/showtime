@@ -95,6 +95,9 @@ class Window(Adw.ApplicationWindow):
     toolbar_clamp: Adw.Clamp = Gtk.Template.Child()
     controls_box: Gtk.Box = Gtk.Template.Child()
     bottom_overlay_box: Gtk.Box = Gtk.Template.Child()
+    
+    lock_icon: Gtk.Image = Gtk.Template.Child()
+    dsc_label: Gtk.Label = Gtk.Template.Child()
 
     title_label: Gtk.Label = Gtk.Template.Child()
     play_button: Gtk.Button = Gtk.Template.Child()
@@ -207,6 +210,7 @@ class Window(Adw.ApplicationWindow):
             self.play,
             self.pipeline,
             self.sink,
+            self.verification_status,
         ) = gst_play_setup(self.picture)
 
         self.paintable.connect("invalidate-size", self._on_paintable_invalidate_size)
@@ -222,6 +226,37 @@ class Window(Adw.ApplicationWindow):
         messenger.connect("warning", self._on_warning)
         messenger.connect("error", self._on_error)
         messenger.connect("missing-plugin", self._on_missing_plugin)
+        
+        # Initially hide DSC verification UI until verification happens
+        self._reset_dsc_verification_ui()
+        
+        self._last_verification_state = None
+        
+        def check_verification_status():
+            if self.verification_status["has_dsc"]:
+                current_state = self.verification_status["verified"]
+                
+                if self._last_verification_state != current_state:
+                    if current_state:
+                        self.lock_icon.set_from_icon_name("verified")
+                        self.dsc_label.set_label("DSC: Trusted")
+                        self.lock_icon.set_visible(True)
+                        self.dsc_label.set_visible(True)
+                        print("[UI] Showing DSC verification - stream verified!")
+                    else:
+                        self.lock_icon.set_from_icon_name("unverified")
+                        self.dsc_label.set_label("DSC: Unverified")
+                        self.lock_icon.set_visible(True)
+                        self.dsc_label.set_visible(True)
+                        print("[UI] Showing DSC unverified - stream verification FAILED!")
+                    
+                    self._last_verification_state = current_state
+                
+                return True
+            return True  # Continue checking
+        
+        # Check every 100ms for verification status update
+        GLib.timeout_add(100, check_verification_status)
 
         if PROFILE == "development":
             self.add_css_class("devel")
@@ -283,10 +318,24 @@ class Window(Adw.ApplicationWindow):
         self.sink.props.window_width = self.get_width() * self.props.scale_factor  # pyright: ignore[reportAttributeAccessIssue]
         self.sink.props.window_height = self.get_height() * self.props.scale_factor  # pyright: ignore[reportAttributeAccessIssue]
 
+    def _reset_dsc_verification_ui(self) -> None:
+        """Reset DSC verification UI when loading new content."""
+        self.lock_icon.set_visible(False)
+        self.dsc_label.set_visible(False)
+        # Reset verification status dict
+        self.verification_status["has_dsc"] = False
+        self.verification_status["verified"] = False
+        # Reset last known state
+        self._last_verification_state = None
+        print("[UI] Reset DSC verification UI")
+
     def play_video(self, gfile: Gio.File) -> None:
         """Start playing the given `GFile`."""
         if not (app := self.props.application):
             return
+
+        # Reset DSC verification UI when loading new file
+        self._reset_dsc_verification_ui()
 
         app.save_play_position(self)  # pyright: ignore[reportAttributeAccessIssue]
 
@@ -700,6 +749,9 @@ class Window(Adw.ApplicationWindow):
     def _on_seek_done(self, _obj: Any) -> None:
         pos = self.play.props.position
         dur = self.play.props.duration
+
+        # Reset DSC verification UI when seeking
+        # self._reset_dsc_verification_ui()
 
         self.seek_scale.set_value((pos / dur) * SCALE_MULT)
         self.position_label.props.label = nanoseconds_to_timestamp(pos)
