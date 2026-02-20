@@ -116,8 +116,9 @@ def gst_play_setup(
                         print("[ERROR] Could not create H.266 decoder!")
                         return
                     
-                    verifier.set_property("key-store-path",
-                        "/home/dnieto/Downloads/dsc/UFO-DSC-Example/keystore/pub/")
+                    key_store_path = os.getenv("DSC_KEY_STORE_PATH", 
+                        "/tmp/dsc/keystore/pub/")
+                    verifier.set_property("key-store-path", key_store_path)
                     
                     parent_bin = element_ref.get_parent()
                     
