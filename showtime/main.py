@@ -12,31 +12,6 @@ from typing import Any
 import os
 import sys
 
-GST_BUILD_DIR = "/opt/gstreamer/dev/bld"
-
-os.environ["GST_PLUGIN_PATH"] = ":".join([
-    f"{GST_BUILD_DIR}/subprojects/gst-plugins-base",
-    f"{GST_BUILD_DIR}/subprojects/gst-plugins-good",
-    f"{GST_BUILD_DIR}/subprojects/gst-plugins-bad",
-    f"{GST_BUILD_DIR}/subprojects/gst-plugins-ugly",
-    f"/home/dnieto/workspace/gst-plugins-rs/target/debug",
-])
-
-os.environ["LD_LIBRARY_PATH"] = ":".join([
-    f"{GST_BUILD_DIR}/subprojects/gstreamer/gst",
-    f"{GST_BUILD_DIR}/subprojects/gst-plugins-base/gst-libs",
-    os.environ.get("LD_LIBRARY_PATH", ""),
-])
-
-os.environ["GI_TYPELIB_PATH"] = ":".join([
-    f"{GST_BUILD_DIR}/subprojects/gst-plugins-bad/gst-libs/gst/play",
-    f"{GST_BUILD_DIR}/subprojects/gstreamer/gst",
-    os.environ.get("GI_TYPELIB_PATH", ""),
-])
-
-# Enable debug logging for dscverifier to see verification messages
-os.environ["GST_DEBUG"] = "dscverifier:6"
-
 import gi
 
 gi.require_version("Gtk", "4.0")
