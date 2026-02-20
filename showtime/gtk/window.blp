@@ -132,22 +132,6 @@ template $Window: Adw.ApplicationWindow {
                   valign: center;
                   margin-top: 48;
 
-                  Image lock_icon {
-                    icon-name: "verification";
-
-                    styles [
-                      "overlaid",
-                      "red",
-                    ]
-                  }
-
-                  Label dsc_label {
-                    label: "DSC: Trusted";
-                    styles [
-                      "red",
-                    ]
-                  }
-
                   Button {
                     name: "backwards-button";
                     valign: center;
@@ -472,6 +456,50 @@ template $Window: Adw.ApplicationWindow {
                   ]
                 }
               };
+            }
+
+            [overlay]
+            Box branding_overlay_box {
+              valign: start;
+              halign: center;
+              margin-top: 6;
+              spacing: 6;
+              can-target: false;
+
+              Image fluendo_logo {
+                icon-name: "fluendo";
+                pixel-size: 32;
+                margin-end: 6;
+
+                styles [
+                  "overlaid",
+                ]
+              }
+
+              Box dsc_verification_box {
+                spacing: 6;
+                margin-end: 6;
+                opacity: 0;
+                visible: false;
+
+                Image lock_icon {
+                  icon-name: "verification";
+                  pixel-size: 24;
+
+                  styles [
+                    "overlaid",
+                    "red",
+                  ]
+                }
+
+                Label dsc_label {
+                  label: "DSC: Trusted";
+                  styles [
+                    "overlaid",
+                    "red",
+                  ]
+                }
+              }
             }
 
             [overlay]

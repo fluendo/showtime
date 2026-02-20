@@ -14,6 +14,7 @@
         "--filesystem=/home/dnieto/workspace/gst-plugins-rs:ro",
         "--filesystem=/home/dnieto/workspace/VVCSoftware_VTM/cfg/keystore:ro",
         "--filesystem=/home/dnieto/Downloads/dsc/UFO-DSC-Example/keystore/pub:ro",
+        "--filesystem=/tmp/dsc/:ro",
         "--env=GST_PLUGIN_PATH=/opt/gstreamer/dev/bld/subprojects/gst-libav/ext/libav/:/opt/gstreamer/dev/bld/subprojects/gstreamer/plugins:/opt/gstreamer/dev/bld/subprojects/gst-plugins-base/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-good/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-bad/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-ugly/gst:/home/dnieto/workspace/gst-plugins-rs/target/debug",
         "--env=GST_PLUGIN_PATH_1_0=/opt/gstreamer/dev/bld/subprojects/gst-libav/ext/libav/:/opt/gstreamer/dev/bld/subprojects/gstreamer/plugins:/opt/gstreamer/dev/bld/subprojects/gst-plugins-base/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-good/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-bad/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-ugly/gst:/home/dnieto/workspace/gst-plugins-rs/target/debug",
         "--env=GST_PLUGIN_SYSTEM_PATH_1_0=",

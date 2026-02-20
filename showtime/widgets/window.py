@@ -96,6 +96,7 @@ class Window(Adw.ApplicationWindow):
     controls_box: Gtk.Box = Gtk.Template.Child()
     bottom_overlay_box: Gtk.Box = Gtk.Template.Child()
     
+    dsc_verification_box: Gtk.Box = Gtk.Template.Child()
     lock_icon: Gtk.Image = Gtk.Template.Child()
     dsc_label: Gtk.Label = Gtk.Template.Child()
 
@@ -240,14 +241,14 @@ class Window(Adw.ApplicationWindow):
                     if current_state:
                         self.lock_icon.set_from_icon_name("verified")
                         self.dsc_label.set_label("DSC: Trusted")
-                        self.lock_icon.set_visible(True)
-                        self.dsc_label.set_visible(True)
+                        self.dsc_verification_box.set_visible(True)
+                        self.dsc_verification_box.set_opacity(1.0)
                         print("[UI] Showing DSC verification - stream verified!")
                     else:
                         self.lock_icon.set_from_icon_name("unverified")
                         self.dsc_label.set_label("DSC: Unverified")
-                        self.lock_icon.set_visible(True)
-                        self.dsc_label.set_visible(True)
+                        self.dsc_verification_box.set_visible(True)
+                        self.dsc_verification_box.set_opacity(1.0)
                         print("[UI] Showing DSC unverified - stream verification FAILED!")
                     
                     self._last_verification_state = current_state
@@ -320,8 +321,8 @@ class Window(Adw.ApplicationWindow):
 
     def _reset_dsc_verification_ui(self) -> None:
         """Reset DSC verification UI when loading new content."""
-        self.lock_icon.set_visible(False)
-        self.dsc_label.set_visible(False)
+        self.dsc_verification_box.set_visible(False)
+        self.dsc_verification_box.set_opacity(0.0)
         # Reset verification status dict
         self.verification_status["has_dsc"] = False
         self.verification_status["verified"] = False
