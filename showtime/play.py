@@ -13,6 +13,7 @@ from gi.repository import (
 )
 
 from showtime import system, utils
+import os
 
 
 def gst_play_setup(
