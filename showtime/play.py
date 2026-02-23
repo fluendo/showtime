@@ -269,18 +269,14 @@ def gst_play_setup(
     bus.connect("message", on_pipeline_message)
 
     video_filter_bin = Gst.Bin.new("video-filter-bin")
-    # videobalance = Gst.ElementFactory.make("rsidentity")
-    videobalance = Gst.ElementFactory.make("identity")
-    # videobalance.set_property("sleep-time", 450000)
-    videoflip = Gst.ElementFactory.make("videoflip")
+    identity = Gst.ElementFactory.make("identity")
     
-    video_filter_bin.add(videobalance)
-    video_filter_bin.add(videoflip)
-    videobalance.link(videoflip)
+    video_filter_bin.add(identity)
+    identity.link(identity)
     
-    sink_pad = videobalance.get_static_pad("sink")
+    sink_pad = identity.get_static_pad("sink")
     video_filter_bin.add_pad(Gst.GhostPad.new("sink", sink_pad))
-    src_pad = videoflip.get_static_pad("src")
+    src_pad = identity.get_static_pad("src")
     video_filter_bin.add_pad(Gst.GhostPad.new("src", src_pad))
     
     pipeline.set_property("video-filter", video_filter_bin)
