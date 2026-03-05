@@ -500,6 +500,32 @@ template $Window: Adw.ApplicationWindow {
                   ]
                 }
               }
+
+              Box dsc_ca_verification_box {
+                spacing: 6;
+                margin-end: 6;
+                opacity: 0;
+                visible: false;
+
+
+                Image cert_icon {
+                  icon-name: "alert";
+                  pixel-size: 30;
+
+                  styles [
+                    "overlaid",
+                    "red",
+                  ]
+                }
+
+                Label dsc_ca_label {
+                  label: "CA untrusted";
+                  styles [
+                    "overlaid",
+                    "red",
+                  ]
+                }
+              }
             }
 
             [overlay]

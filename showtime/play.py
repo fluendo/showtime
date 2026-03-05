@@ -18,6 +18,7 @@ import os
 
 def gst_play_setup(
     picture: Gtk.Picture,
+    window = None,
 ) -> tuple[Gdk.Paintable, GstPlay.Play, Gst.Element, Gst.Element]:
     """Set up `GstPlay`."""
     sink = paintable_sink = Gst.ElementFactory.make("gtk4paintablesink")
@@ -120,6 +121,9 @@ def gst_play_setup(
                     key_store_path = os.getenv("DSC_KEY_STORE_PATH", 
                         "/tmp/dsc/keystore/pub/")
                     verifier.set_property("key-store-path", key_store_path)
+                    trust_store_path = os.getenv("DSC_TRUST_STORE_PATH", 
+                        "/tmp/dsc/keystore/pub/ca")
+                    verifier.set_property("trust-store-path", trust_store_path)
                     
                     parent_bin = element_ref.get_parent()
                     
@@ -256,6 +260,20 @@ def gst_play_setup(
                     print("[DSC-VERIFICATION] ✅ Stream signature verified successfully!")
                 else:
                     print("[DSC-VERIFICATION] ❌ Stream signature verification FAILED!")
+
+                cert_trusted = structure.get_boolean("certificate-trusted")[1] if structure.has_field("certificate-trusted") else True
+                if window and hasattr(window, 'dsc_ca_verification_box'):
+                    ca_box = window.dsc_ca_verification_box
+                    if cert_trusted:
+                        ca_box.set_visible(False)
+                        ca_box.set_opacity(0)
+                        print("[CA-VERIFICATION] Certificate trusted - hiding CA verification box")
+                    else:
+                        ca_box.set_visible(True)
+                        ca_box.set_opacity(1)
+                        window.cert_icon.set_from_icon_name("alert")
+                        window.dsc_ca_label.set_label("CA untrusted")
+                        print("[CA-VERIFICATION] ⚠️ Certificate UNTRUSTED - showing alert!")
                 
                 # Notify the picture widget so it can update the UI
                 if hasattr(picture, 'verification_status_changed'):

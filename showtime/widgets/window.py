@@ -100,6 +100,10 @@ class Window(Adw.ApplicationWindow):
     lock_icon: Gtk.Image = Gtk.Template.Child()
     dsc_label: Gtk.Label = Gtk.Template.Child()
 
+    dsc_ca_verification_box: Gtk.Box = Gtk.Template.Child()
+    cert_icon: Gtk.Image = Gtk.Template.Child()
+    dsc_ca_label: Gtk.Label = Gtk.Template.Child()
+
     title_label: Gtk.Label = Gtk.Template.Child()
     play_button: Gtk.Button = Gtk.Template.Child()
     position_label: Gtk.Label = Gtk.Template.Child()
@@ -212,7 +216,7 @@ class Window(Adw.ApplicationWindow):
             self.pipeline,
             self.sink,
             self.verification_status,
-        ) = gst_play_setup(self.picture)
+        ) = gst_play_setup(self.picture, self)
 
         self.paintable.connect("invalidate-size", self._on_paintable_invalidate_size)
 
@@ -240,13 +244,13 @@ class Window(Adw.ApplicationWindow):
                 if self._last_verification_state != current_state:
                     if current_state:
                         self.lock_icon.set_from_icon_name("verified")
-                        self.dsc_label.set_label("DSC: Trusted")
+                        self.dsc_label.set_label("Signature validated")
                         self.dsc_verification_box.set_visible(True)
                         self.dsc_verification_box.set_opacity(1.0)
                         print("[UI] Showing DSC verification - stream verified!")
                     else:
                         self.lock_icon.set_from_icon_name("unverified")
-                        self.dsc_label.set_label("DSC: Unverified")
+                        self.dsc_label.set_label("Signature invalid")
                         self.dsc_verification_box.set_visible(True)
                         self.dsc_verification_box.set_opacity(1.0)
                         print("[UI] Showing DSC unverified - stream verification FAILED!")
