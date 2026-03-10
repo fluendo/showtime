@@ -9,24 +9,7 @@
         "--socket=fallback-x11",
         "--device=dri",
         "--socket=wayland",
-        "--socket=pulseaudio",
-        "--filesystem=/opt/gstreamer/dev:ro",
-        "--filesystem=/home/dnieto/workspace/gst-plugins-rs:ro",
-        "--filesystem=/home/dnieto/workspace/VVCSoftware_VTM/cfg/keystore:ro",
-        "--filesystem=/home/dnieto/Downloads/dsc/UFO-DSC-Example/keystore/pub:ro",
-        "--filesystem=/home/dnieto/Downloads/dsc/UFO-DSC-Example/keystore/ca:ro",
-        "--filesystem=/tmp/dsc/:ro",
-        "--env=GST_PLUGIN_PATH=/opt/gstreamer/dev/bld/subprojects/gst-libav/ext/libav/:/opt/gstreamer/dev/bld/subprojects/gstreamer/plugins:/opt/gstreamer/dev/bld/subprojects/gst-plugins-base/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-good/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-bad/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-ugly/gst:/home/dnieto/workspace/gst-plugins-rs/target/debug",
-        "--env=GST_PLUGIN_PATH_1_0=/opt/gstreamer/dev/bld/subprojects/gst-libav/ext/libav/:/opt/gstreamer/dev/bld/subprojects/gstreamer/plugins:/opt/gstreamer/dev/bld/subprojects/gst-plugins-base/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-good/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-bad/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-ugly/gst:/home/dnieto/workspace/gst-plugins-rs/target/debug",
-        "--env=GST_PLUGIN_SYSTEM_PATH_1_0=",
-        "--env=GST_PLUGIN_SYSTEM_PATH=",
-        "--env=GI_TYPELIB_PATH=/opt/gstreamer/dev/bld/subprojects/gst-plugins-bad/gst-libs/gst/play:/opt/gstreamer/dev/bld/subprojects/gstreamer/gst",
-        "--env=PATH=/opt/gstreamer/dev/bld/subprojects/gstreamer/tools:/app/bin:/usr/bin",
-        "--env=GST_PLUGIN_SCANNER=/opt/gstreamer/dev/bld/subprojects/gstreamer/libs/gst/helpers/gst-plugin-scanner",
-        "--env=GST_REGISTRY_1_0=/tmp/gst-registry.bin",
-        "--env=GST_DEBUG=dscverifier:5",
-        "--env=GST_DEBUG_DUMP_DOT_DIR=/tmp/",
-        "--env=LD_LIBRARY_PATH=/opt/gstreamer/dev/ins/lib/x86_64-linux-gnu/:/usr/local/lib/x86_64-linux-gnu/:/opt/gstreamer/dev/bld/subprojects/gst-plugins-base/gst-libs/gst/video:/opt/gstreamer/dev/bld/subprojects/gstreamer/libs/gstreamer-1.0:/opt/gstreamer/dev/bld/subprojects/gstreamer/gst:/opt/gstreamer/dev/bld/subprojects/gst-plugins-base/gst-libs:/opt/gstreamer/dev/bld/subprojects/gst-plugins-bad/gst-libs:/opt/gstreamer/dev/bld/subprojects/gst-plugins-good/gst-libs:/opt/gstreamer/dev/bld/subprojects/gst-plugins-ugly/gst-libs:/app/lib:/usr/local/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH"
+        "--socket=pulseaudio"
     ],
     "cleanup" : [
         "/include",
@@ -40,24 +23,6 @@
         "*.a"
     ],
     "modules" : [
-        {
-            "name" : "bzip2",
-            "buildsystem" : "simple",
-            "build-commands" : [
-                "make -j$FLATPAK_BUILDER_N_JOBS -f Makefile-libbz2_so",
-                "make -j$FLATPAK_BUILDER_N_JOBS install PREFIX=/app"
-            ],
-            "sources" : [
-                {
-                    "type" : "archive",
-                    "url" : "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
-                    "sha256" : "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269"
-                }
-            ],
-            "cleanup" : [
-                "/bin"
-            ]
-        },
         {
             "name" : "showtime",
             "builddir" : true,
