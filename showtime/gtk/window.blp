@@ -459,6 +459,76 @@ template $Window: Adw.ApplicationWindow {
             }
 
             [overlay]
+            Box branding_overlay_box {
+              valign: start;
+              halign: center;
+              margin-top: 6;
+              spacing: 6;
+              can-target: false;
+
+              Image fluendo_logo {
+                icon-name: "fluendo";
+                pixel-size: 100;
+                margin-end: 6;
+
+                styles [
+                  "overlaid",
+                ]
+              }
+
+              Box dsc_verification_box {
+                spacing: 6;
+                margin-end: 6;
+                opacity: 0;
+                visible: false;
+
+                Image lock_icon {
+                  icon-name: "verification";
+                  pixel-size: 30;
+
+                  styles [
+                    "overlaid",
+                    "red",
+                  ]
+                }
+
+                Label dsc_label {
+                  label: "DSC: Trusted";
+                  styles [
+                    "overlaid",
+                    "red",
+                  ]
+                }
+              }
+
+              Box dsc_ca_verification_box {
+                spacing: 6;
+                margin-end: 6;
+                opacity: 0;
+                visible: false;
+
+
+                Image cert_icon {
+                  icon-name: "alert";
+                  pixel-size: 30;
+
+                  styles [
+                    "overlaid",
+                    "red",
+                  ]
+                }
+
+                Label dsc_ca_label {
+                  label: "CA untrusted";
+                  styles [
+                    "overlaid",
+                    "red",
+                  ]
+                }
+              }
+            }
+
+            [overlay]
             WindowHandle header_handle_end {
               valign: start;
               halign: end;

@@ -9,6 +9,9 @@ from hashlib import sha256
 from logging.handlers import RotatingFileHandler
 from typing import Any
 
+import os
+import sys
+
 import gi
 
 gi.require_version("Gtk", "4.0")
@@ -55,6 +58,7 @@ class Application(Adw.Application):
         logger.debug("Starting %s v%s (%s)", APP_ID, VERSION, PROFILE)
         logger.debug("Python version: %s", sys.version)
         logger.debug("GStreamer version: %s", ".".join(str(v) for v in Gst.version()))
+        logger.debug("GStreamer plugin path: %s", os.environ.get("GST_PLUGIN_PATH", "system default"))
 
         new_window = GLib.OptionEntry()
         new_window.long_name = "new-window"

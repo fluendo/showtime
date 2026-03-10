@@ -8,7 +8,7 @@ project(
   ],
 )
 
-dependency('gtk4', version: '>= 4.18.0')
+dependency('gtk4', version: '>= 4.16.0')
 dependency('libadwaita-1', version: '>= 1.8.alpha')
 dependency('blueprint-compiler', version: '>= 0.17')
 
@@ -46,6 +46,7 @@ conf.set('PREFIX', prefix)
 conf.set('PROFILE', profile)
 conf.set('localedir', get_option('prefix') / get_option('localedir'))
 conf.set('pkgdatadir', pkgdatadir)
+#conf.set('pythondir', python_dir)
 conf.set('bindir', get_option('bindir'))
 conf.set('prefix', get_option('prefix'))
 
